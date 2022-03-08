@@ -1,0 +1,56 @@
+﻿@using DataAccess.Models
+@model List<City>
+@{
+    ViewData["Title"] = "Cities";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="display-4 mb-3">Cities</h1>
+        </div>
+    </div>
+    @if (TempData["message"] != null)
+    {
+        <div class="alert alert-danger col-6" role="alert">
+            @TempData["message"]
+        </div>
+    }
+    <div class="row">
+        <div class="col">
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addCityModal">
+                Add City
+            </button>
+        </div>
+    </div>
+
+
+    <table class="table table-sm table table-hover m-2 col-6">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var city in Model)
+            {
+            <tr class="rowCity">
+                <td class="colCity">
+                    @city.Name
+                    <input type="hidden" asp-for="@city.Id" />
+                    <input type="hidden" asp-for="@city.Name" />
+                </td>
+                <td class="text-right">
+                    <button id="btnEdit" type="button" class="btn btn-warning btn-sm">Edit</button>
+                </td>
+                <td class="text-center">
+                    <a class="btn btn-sm btn-danger" asp-action="DeleteCity" asp-controller="Home" asp-route-id="@city.Id" onclick="stopPropagation(event);">Delete</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
